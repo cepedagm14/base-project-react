@@ -7,6 +7,7 @@ import {
   Routes,
 } from "react-router-dom";
 import logo from "../logo.svg";
+import { routes } from "./routes";
 export const Navigation = () => {
   return (
     <>
@@ -15,37 +16,23 @@ export const Navigation = () => {
           <nav>
             <img src={logo} alt="react-logo" />
             <ul>
-              <li>
-                <NavLink
-                  to="/home"
-                  className={({ isActive }) => (isActive ? "nav-active" : "")}
-                >
-                  Home
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/about"
-                  className={({ isActive }) => (isActive ? "nav-active" : "")}
-                >
-                  About
-                </NavLink>
-              </li>
-              <li>
-                <NavLink
-                  to="/users"
-                  className={({ isActive }) => (isActive ? "nav-active" : "")}
-                >
-                  users
-                </NavLink>
-              </li>
+              {routes.map(({ to, name }) => (
+                <li key={to}>
+                  <NavLink
+                    to={to}
+                    className={({ isActive }) => (isActive ? "nav-active" : "")}
+                  >
+                    {name}
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </nav>
           <Routes>
-            <Route path="about" element={<p>About</p>} />
-            <Route path="users" element={<p>users</p>} />
-            <Route path="home" element={<p>home</p>} />
-            <Route path="/*" element={<Navigate to="/home" replace />} />
+            {routes.map(({ to, path, Component }) => (
+              <Route key={to} path={path} element={<Component />} />
+            ))}
+            <Route path="/*" element={<Navigate to={routes[0].to} replace />} />
           </Routes>
         </div>
       </BrowserRouter>
