@@ -1,14 +1,11 @@
-import styles from "../styles/styles.module.css";
-import { useProducts } from "../hooks/useProducts";
 import { createContext } from "react";
-import { ProductTitle } from "./ProductTitle";
-import { ProductImage } from "./ProductImage";
-import { ProductButon } from "./ProductButon";
+import { useProducts } from "../hooks/useProducts";
+import styles from "../styles/styles.module.css";
 
 export const ProductContext = createContext({});
 const { Provider } = ProductContext;
 
-export const ProductCard = ({ product, children }) => {
+export const ProductCard = ({ product, children, className }) => {
   const { increaseBy, count } = useProducts();
 
   return (
@@ -19,7 +16,7 @@ export const ProductCard = ({ product, children }) => {
         product,
       }}
     >
-      <div className={styles.productCard}>{children}</div>
+      <div className={`${styles.productCard} ${className}`}>{children}</div>
     </Provider>
   );
 };
